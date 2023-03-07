@@ -9,7 +9,6 @@ const {
 // const  = require('../../middlewares/filesHandler');
 
 const { users: ctrl } = require('../../controllers');
-const { getVerification } = require('../../controllers/users');
 
 router.patch('/', authCheckValid, schemaValidator, ctrl.setSubscription);
 router.get('/current', authCheckValid, ctrl.getCurrent);
@@ -20,5 +19,6 @@ router.patch(
   filesHandler.single('avatar'),
   ctrl.addAvatar
 );
-router.get('/verify/:verificationToken', getVerification);
+router.get('/verify/:verificationToken', ctrl.getVerification);
+router.post('/verify', ctrl.resendVerification);
 module.exports = router;

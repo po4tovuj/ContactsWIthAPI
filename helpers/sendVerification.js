@@ -9,7 +9,6 @@ const msg = {
   from: 'po4tovuj@gmail.com', // Change to your verified sender
   subject: 'Contacts Api verification ',
   // text: 'and easy to do anywhere, even with Node.js',
-  html: '<strong>Verify your email</strong>',
 };
 const sendVerification = async (data) => {
   const email = { ...msg, ...data };

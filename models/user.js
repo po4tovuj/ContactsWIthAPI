@@ -3,6 +3,7 @@ const emailRegExp = require('../helpers/regExp/email');
 const bcrypt = require('bcrypt');
 const { handleMongooseError } = require('../helpers');
 const gravatar = require('gravatar');
+const { bool, boolean } = require('joi');
 const userModel = Schema(
   {
     password: {
@@ -22,6 +23,14 @@ const userModel = Schema(
     },
     avatarUrl: {
       type: String,
+    },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, 'Verify token is required'],
     },
     token: String,
   },

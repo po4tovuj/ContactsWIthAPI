@@ -16,9 +16,9 @@ router.post('/logout', authCheckValid, ctrl.logOut);
 router.patch(
   '/avatar',
   authCheckValid,
-
   filesHandler.single('avatar'),
   ctrl.addAvatar
 );
-
+router.get('/verify/:verificationToken', ctrl.getVerification);
+router.post('/verify', ctrl.resendVerification);
 module.exports = router;

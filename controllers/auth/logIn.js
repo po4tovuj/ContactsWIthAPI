@@ -10,10 +10,10 @@ const logIn = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user || !user.comparePassword(password)) {
-    throw {
+    throw HttpError({
       status: 401,
       message: 'Unauthorized. Email or password is wrong',
-    };
+    });
   }
   const payload = {
     id: user._id,

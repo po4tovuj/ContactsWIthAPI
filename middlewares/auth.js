@@ -13,6 +13,7 @@ const authCheckValid = async (req, res, next) => {
   try {
     const { id } = jwt.verify(token, SECRET_KEY);
     const user = await User.findById(id);
+    console.log('user: ', user);
 
     if (!user) {
       next({ status: 401, message: "User doesn't exist" });

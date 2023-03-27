@@ -19,7 +19,7 @@ router.post(
   ctrl.addContact
 );
 
-router.delete('/:id', isValidId, ctrl.removeContact);
+router.delete('/:id', authCheckValid, isValidId, ctrl.removeContact);
 
 router.put(
   '/:id',

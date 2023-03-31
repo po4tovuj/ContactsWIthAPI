@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "http://contactsdb-4y00.onrender.com"
+      "url": "http://contactsdb-4y00.onrender.com/api"
     }
   ],
   "tags": [
@@ -19,6 +19,9 @@
     },
     {
       "name": "Contacts"
+    },
+    {
+      "name": "Recipes"
     }
   ],
   "paths": {
@@ -98,6 +101,42 @@
           },
           "401": {
             "description": "Unauthorized. Email or password is wrong"
+          }
+        }
+      }
+    },
+    "/add": {
+      "post": {
+        "tags": ["Recipes"],
+        "summary": "Create new recipe",
+        "operationId": "createNewRecipe",
+        "requestBody": {
+          "description": "Create new recipe",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Recipe"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recipe"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/MissedRequiredFields"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorizedError"
           }
         }
       }
@@ -233,10 +272,14 @@
         "operationId": "updateUserAvatar",
         "requestBody": {
           "content": {
-            "application/octet-stream": {
+            "multipart/form-data": {
               "schema": {
-                "type": "string",
-                "format": "binary"
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -638,6 +681,7 @@
     },
     "/contacts/{id}/favorite": {
       "patch": {
+        "tags": ["Contacts"],
         "parameters": [
           {
             "name": "id",
@@ -653,9 +697,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "favorite": {
-                  "type": "boolean",
-                  "example": true
+                "type": "object",
+                "properties": {
+                  "favorite": {
+                    "type": "boolean",
+                    "example": true
+                  }
                 }
               }
             }
@@ -793,6 +840,88 @@
           "verify": {
             "type": "boolean",
             "example": false
+          }
+        }
+      },
+      "Recipe": {
+        "type": "object",
+        "required": [
+          "recipeTitle",
+          "description",
+          "category",
+          "cookingTime",
+          "ingredients",
+          "preparation",
+          "image"
+        ],
+        "properties": {
+          "recipeTitle": {
+            "type": "string",
+            "example": "Macaroon"
+          },
+          "description": {
+            "type": "string",
+            "example": "it's an awesome cookies"
+          },
+          "category": {
+            "type": "string",
+            "example": "dessert"
+          },
+          "cookingTime": {
+            "type": "string",
+            "default": "2 hours"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ingredient"
+            }
+          },
+          "preparation": {
+            "type": "string",
+            "default": "beat eggs until smooth"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "example": "public/recipes/63fdff3a26519186b34fdd81.wmark-kievrealty"
+          }
+        }
+      },
+      "Categories": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Category"
+        }
+      },
+      "Category": {
+        "type": "string",
+        "enum": [
+          "Beef",
+          "Breakfast",
+          "Dessert",
+          "Goat",
+          "Lamb",
+          "Miscellaneous",
+          "Vegan",
+          "Chicken",
+          "Pasta",
+          "Pork",
+          "SeaFood",
+          "Side"
+        ]
+      },
+      "Ingredient": {
+        "type": "object",
+        "required": ["name", "counts"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "eggs"
+          },
+          "counts": {
+            "type": "string",
+            "default": "2 tbs"
           }
         }
       },

@@ -3,7 +3,6 @@ const emailRegExp = require('../helpers/regExp/email');
 const bcrypt = require('bcrypt');
 const { handleMongooseError } = require('../helpers');
 const gravatar = require('gravatar');
-const { bool, boolean } = require('joi');
 const userModel = Schema(
   {
     password: {

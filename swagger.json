@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "http://contactsdb-4y00.onrender.com/api"
+      "url": "https://contactsdb-4y00.onrender.com/api"
     }
   ],
   "tags": [
